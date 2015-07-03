@@ -1,12 +1,10 @@
-// Ionic Starter App
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
 
-.run(function($ionicPlatform) {
+var db = null;
+
+angular.module('starter', ['ionic', 'starter.controllers','flickrApp.services', 'ngCordova'])
+
+.run(function($ionicPlatform, $cordovaSQLite) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -17,6 +15,14 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    console.log("Aditya: reading current directory");
+     window.plugins.sqlDB.copy("htci.db", 1, copysuccess,copyerror);
+
+    db = $cordovaSQLite.openDB("htci.db");
+     
+    // $cordovaSQLite.execute(db, "INSERT INTO tblPriests (id, Name, Lang, picurl) VALUES (1,'Sri BadriNath', 'Hindi, Nepali & English', 'img/1.jpg')");
+
+    console.log(db);
   });
 })
 
@@ -51,6 +57,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
      views: {
        'menuContent': {
          templateUrl: "templates/upcomingevents.html"
+
        }
      }
   })
@@ -58,7 +65,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
        url: "/priests",
        views: {
          'menuContent': {
-           templateUrl: "templates/meetourpriests.html"
+           templateUrl: "templates/meetourpriests.html",
+           controller: "dbController"
          }
        }
     })
@@ -90,7 +98,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
             url: "/photos",
             views: {
               'menuContent': {
-              templateUrl: "templates/photos.html"
+              templateUrl: "templates/photos.html",
+              controller: 'MainCtrl'
               }
             }
    })
@@ -107,7 +116,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
             url: "/location",
             views: {
               'menuContent': {
-              templateUrl: "templates/contact.html"
+              templateUrl: "templates/location.html"
               }
             }
       })

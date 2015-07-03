@@ -1,1 +1,9 @@
 /* Empty. Add your own CSS if you like */
+.item a {
+  background-color: transparent;
+  border: none;
+  border-top: 1px solid;
+  border-bottom: 2px solid;
+  border-color: #0000cc;
+  color: #F0F1F1;
+}
