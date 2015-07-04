@@ -4,11 +4,15 @@
 
 
 
-    <button class="button button-positive" ng-click="selectAll()">Select All</button>
+    <button class="button button-energized" ng-click="selectAll()">Select All</button>
 
-    <button class="button button-positive" ng-click="insert('Nic','Jo')">Insert</button>
-    <button class="button button-positive" ng-click="select('Jo')">Select</button>
-
+    <button class="button button-positive" ng-click="insert(3,'Kumar','Bhojpuri','sdfsdf')">Insert</button>
+    <button class="button button-positive" ng-click="select('1')">Select</button>
+    <ion-list>
+        <ion-item ng-repeat="event in events">
+            Priest: {{event}}
+        </ion-item>
+    </ion-list>
 
   </ion-content>
 </ion-view>

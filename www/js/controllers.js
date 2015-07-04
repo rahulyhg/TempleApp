@@ -93,27 +93,32 @@ angular.module('starter.controllers', [])
 		});
 })
 
+.factory('Items', ['$firebaseArray', function($firebaseArray) {
+  var itemsRef = new Firebase('https://htci.firebaseio.com/items');
+  return $firebaseArray(itemsRef);
+}])
+
 .controller("dbController", function($scope, $cordovaSQLite) {
 
 
-$scope.insert = function(firstname, lastname) {
+$scope.insert = function(id, Name, Lang, picurl) {
   console.log("reading current directory in Insert");
    console.log(db);
-        var query = "INSERT INTO people (firstname, lastname) VALUES (?,?)";
-        $cordovaSQLite.execute(db, query, [firstname, lastname]).then(function(res) {
+        var query = "INSERT INTO tblPriests (id, Name, Lang, picurl) VALUES (?,?,?,?)";
+        $cordovaSQLite.execute(db, query, [id, Name, Lang, picurl]).then(function(res) {
             console.log("INSERT ID -> " + res.insertId);
         }, function (err) {
             console.error(err.message);
         });
     }
 
-    $scope.select = function(lastname) {
+    $scope.select = function(id) {
     console.log("reading current directory in select");
      console.log(db);
-        var query = "SELECT firstname, lastname FROM people WHERE lastname = ?";
-        $cordovaSQLite.execute(db, query, [lastname]).then(function(res) {
+        var query = "SELECT id, Name FROM tblPriests WHERE id = ?";
+        $cordovaSQLite.execute(db, query, [id]).then(function(res) {
             if(res.rows.length > 0) {
-                console.log("SELECTED -> " + res.rows.item(0).firstname + " " + res.rows.item(0).lastname);
+                console.log("SELECTED -> " + res.rows.item(0).id + " " + res.rows.item(0).Name);
             } else {
                 console.log("No results found");
             }
@@ -121,18 +126,21 @@ $scope.insert = function(firstname, lastname) {
             console.error(err.message);
         });
     }
+            $scope.events = [];
       $scope.selectAll = function() {
               console.log("reading current directory in selectAll");
              // db = $cordovaSQLite.openDB("htci.db",2);
-              console.log(db);
+             // console.log(db);
 
               var query = "SELECT id, Name, Lang, picurl FROM tblPriests";
-
+            console.log(query);
               $cordovaSQLite.execute(db, query, []).then(function(res) {
                   if(res.rows.length > 0) {
+                                                         console.log(res.rows);
                       console.log("data found");
                       for(var i = 0; i < res.rows.length; i++) {
                           console.log("SELECTED -> " + res.rows.item(i).id + " " + res.rows.item(i).Name);
+                                                         $scope.events.push(res.rows.item(i).Name);
                       }
                   } else {
                       console.log("No results found");
@@ -140,12 +148,34 @@ $scope.insert = function(firstname, lastname) {
               }, function (err) {
                   console.error("Error: " + err.message);
               });
+
           }
 
 
 })
-
-
+.controller('contactCtrl',function($scope,memService){
+        $scope.members = memService.all();
+})
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
+})
+.controller('ListCtrl', function($scope, $ionicListDelegate, Items) {
+
+  $scope.items = Items;
+
+  $scope.addItem = function() {
+    var name = prompt('What do you need to buy?');
+    if (name) {
+      $scope.items.$add({
+        'name': name,
+        'lang': 'English & Hindi'
+        });
+    }
+  };
+
+  $scope.purchaseItem = function(item) {
+    var itemRef = new Firebase('https://htci.firebaseio.com/items/' + item.$id);
+    itemRef.child('status').set('purchased');
+    $ionicListDelegate.closeOptionButtons();
+  };
 });

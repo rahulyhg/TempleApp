@@ -2,7 +2,7 @@
 
 var db = null;
 
-angular.module('starter', ['ionic', 'starter.controllers','flickrApp.services', 'ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers','flickrApp.services', 'ngCordova','firebase'])
 
 .run(function($ionicPlatform, $cordovaSQLite) {
   $ionicPlatform.ready(function() {
@@ -16,11 +16,11 @@ angular.module('starter', ['ionic', 'starter.controllers','flickrApp.services', 
       StatusBar.styleDefault();
     }
     console.log("Aditya: reading current directory");
-     window.plugins.sqlDB.copy("htci.db", 1, copysuccess,copyerror);
 
-    db = $cordovaSQLite.openDB("htci.db");
-     
-    // $cordovaSQLite.execute(db, "INSERT INTO tblPriests (id, Name, Lang, picurl) VALUES (1,'Sri BadriNath', 'Hindi, Nepali & English', 'img/1.jpg')");
+    db = $cordovaSQLite.openDB("htci.db",2);
+    //$cordovaSQLite.execute(db, "INSERT INTO tblPriests (id, Name, Lang, picurl) VALUES (1,'Sri BadriNath', 'Hindi, Nepali & English', 'img/1.jpg')");
+
+    //$cordovaSQLite.execute(db, "INSERT INTO tblPriests (id, Name, Lang, picurl) VALUES (1,'Sri BadriNath', 'Hindi, Nepali & English', 'img/1.jpg')",console.log("Ho gaya"),console.log("Nahi Hua"));
 
     console.log(db);
   });
@@ -108,7 +108,8 @@ angular.module('starter', ['ionic', 'starter.controllers','flickrApp.services', 
          url: "/contact",
          views: {
            'menuContent': {
-           templateUrl: "templates/contactus.html"
+           templateUrl: "templates/contactus.html",
+           controller: "contactCtrl"
            }
          }
    })

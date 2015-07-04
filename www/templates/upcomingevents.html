@@ -1,5 +1,13 @@
 <ion-view view-title="Upcoming Events">
-<ion-content>
-    <h1>Upcoming Events</h1>
+<ion-content ng-controller="ListCtrl">
+    <button class="button button-icon ion-plus" ng-click="addItem()"></button>
+    <ion-list>
+        <ion-item ng-repeat="item in items" ng-class="{purchased: item.status == 'purchased'}">
+            {{item.name}}
+            <ion-option-button class="button-royal" ng-click="purchaseItem(item)">
+                <i class="icon ion-checkmark"></i>
+            </ion-option-button>
+        </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

@@ -1,5 +1,39 @@
-<ion-view view-title="Contact us">
-<ion-content>
-    <h1>Fill the orm</h1>
+<ion-view view-title="HTCI Contacts">
+<ion-content ng-controller="contactCtrl">
+    <div style="align-item: center; justify-content: center;">
+    <h2>Hindu Temple Contacts</h2>
+    <p style="padding-right: 20px">To contact people below please click email icon.</p>
+
+
+    <div class="list">
+        <div class="item item-divider">
+            Executive Committee
+        </div>
+        <div ng-repeat="member in members">
+
+            <div class="list card energized" ng-show="{{member.memberType == 'Executive'}}">
+                <div class="item item-icon-right">
+                    <h2><strong>{{member.name}}</strong></h2>
+                    <p>{{member.post}}</p>
+                    <a href="mailto:{{member.email}}?Subject=<Edit_Your Subject Line>[Email_From_APP]"><i class="icon ion-email"></i></a>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="item item-divider">
+            Board Members
+        </div>
+        <div ng-repeat="member in members">
+            <div class="list card energized" ng-show="{{member.memberType == 'Board'}}">
+                <div class="item item-icon-right">
+                    <h2><strong>{{member.name}}</strong></h2>
+                    <p>{{member.post}}</p>
+                    <a href="mailto:{{member.email}}?Subject=<Edit_Your Subject Line>[Email_From_APP]"><i class="icon ion-email"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
   </ion-content>
 </ion-view>
