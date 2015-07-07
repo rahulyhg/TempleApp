@@ -62,14 +62,19 @@ angular.module('starter.controllers', [])
 	});
 
 	// Opening Album
-	$scope.openAlbum = function(photoset_id) {
-    	$state.go('album',{id: photoset_id });
+	$scope.openAlbum = function(album_id) {
+
+	    $state.go('app.album',{id: album_id });
+
+
     };
 
 })
 .controller('AlbumCtrl', function($scope,$ionicLoading,$stateParams,Flickr) {
 	$ionicLoading.show();
+
 		$scope.id = $stateParams.id;
+
 		$scope.photoList = [];
 
 		// Getting List of Photos from a Photoset
@@ -77,6 +82,7 @@ angular.module('starter.controllers', [])
 			$ionicLoading.hide();
 			console.log(result);
 			$scope.photos = result.data.photoset.photo;
+			console.log($scope.photos);
 			$scope.title = result.data.photoset.title;
 
 			angular.forEach($scope.photos, function(photo,key) {
@@ -85,14 +91,12 @@ angular.module('starter.controllers', [])
 				Flickr.getInfo(id,secret).then(function(result) {
 					$scope.photoList.push({sizes: result[0].data, info: result[1].data});
 					console.log($scope.photoList);
-					console.log("adiy");
 
 				});
 			});
 
 		});
 })
-
 .factory('Items', ['$firebaseArray', function($firebaseArray) {
   var itemsRef = new Firebase('https://htci.firebaseio.com/items');
   return $firebaseArray(itemsRef);
@@ -158,6 +162,32 @@ $scope.insert = function(id, Name, Lang, picurl) {
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
+})
+.controller('MapController', function($scope, $ionicLoading) {
+
+    google.maps.event.addDomListener(window, 'load', function() {
+        var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
+
+        var mapOptions = {
+            center: myLatlng,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+            var myLocation = new google.maps.Marker({
+                position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                map: map,
+                title: "My Location"
+            });
+        });
+
+        $scope.map = map;
+    });
+
 })
 .controller('ListCtrl', function($scope, $ionicListDelegate, Items) {
 

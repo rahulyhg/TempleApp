@@ -2,7 +2,7 @@
 
 var db = null;
 
-angular.module('starter', ['ionic', 'starter.controllers','flickrApp.services', 'ngCordova','firebase'])
+angular.module('starter', ['ionic', 'starter.controllers','flickrApp.services', 'ngCordova','firebase','starter.directives'])
 
 .run(function($ionicPlatform, $cordovaSQLite) {
   $ionicPlatform.ready(function() {
@@ -103,6 +103,16 @@ angular.module('starter', ['ionic', 'starter.controllers','flickrApp.services', 
               }
             }
    })
+   .state('app.album', {
+               url: "/album/:id",
+               views: {
+                 'menuContent': {
+                 templateUrl: "templates/Album.html",
+                 controller: 'AlbumCtrl'
+                 }
+               }
+      })
+
 
     .state('app.contact', {
          url: "/contact",
@@ -117,7 +127,8 @@ angular.module('starter', ['ionic', 'starter.controllers','flickrApp.services', 
             url: "/location",
             views: {
               'menuContent': {
-              templateUrl: "templates/location.html"
+              templateUrl: "templates/location.html",
+              controller: "MapController"
               }
             }
       })
