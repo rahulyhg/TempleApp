@@ -1,5 +1,66 @@
 <ion-view view-title="Book Your Event">
 <ion-content>
-    <h1>Book Your Event</h1>
+    <div class="card">
+        <div class="item item-text-wrap">
+            Please complete form below to schedule any pooja service with priest.
+        </div>
+    </div>
+    <div class="card">
+        <form name="serviceReqForm">
+        <div class="item">
+            <div class="list">
+                <label class="item item-input">
+                    <span class="input-label">Full Name</span>
+                    <input type="text" ng-model="fullname">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Email Address</span>
+                    <input type="text" ng-model="emailaddress">
+                </label>
+
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Service
+                    </div>
+                    <select ng-model="pooja.name">
+                        <option selected>Select Service</option>
+                        <option>Vahan Pooja</option>
+                        <option>Satyanaran Pooja (Home)</option>
+                        <option>Satyanaran Pooja (Temple)</option>
+                        <option>Aiyappa Pooja</option>
+                    </select>
+                </label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Prefeered Priest
+                    </div>
+                    <select>
+                        <option value="badri">Badri</option>
+                        <option>Bhuttar</option>
+                        <option>Third one</option>
+                    </select>
+                </label>
+                <label class="item item-input">
+                    <div class="input-label">
+                        Service Date
+                    </div>
+                    <input type="date">
+
+                </label>
+                <label class="item item-input">
+                    <div class="input-label">
+                        Note
+                    </div>
+                    <textarea name="comment" id="comment-textarea"></textarea>
+                </label>
+
+            </div>
+
+            <button class="button button-full button-energized" ng-click="SubmitServiceRequest()">
+                Submit Pooja Request
+            </button>
+        </div>
+        </form>
+    </div>
   </ion-content>
 </ion-view>

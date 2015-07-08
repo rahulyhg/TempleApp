@@ -90,7 +90,8 @@ angular.module('starter', ['ionic', 'starter.controllers','flickrApp.services', 
          url: "/booking",
          views: {
            'menuContent': {
-           templateUrl: "templates/bookanevent.html"
+           templateUrl: "templates/bookanevent.html",
+           controller: "EventBookingCtrl"
            }
          }
    })
@@ -107,7 +108,7 @@ angular.module('starter', ['ionic', 'starter.controllers','flickrApp.services', 
                url: "/album/:id",
                views: {
                  'menuContent': {
-                 templateUrl: "templates/Album.html",
+                 templateUrl: "templates/album.html",
                  controller: 'AlbumCtrl'
                  }
                }

@@ -58,6 +58,7 @@ angular.module('starter.controllers', [])
 	// Getting Photosets Detail from Flickr Service
 	Flickr.getPhotoSets().then(function(result){
 		$scope.photoList = result.data.photosets.photoset;
+		$scope.photoList.reverse();
 		$ionicLoading.hide();
 	});
 
@@ -188,6 +189,12 @@ $scope.insert = function(id, Name, Lang, picurl) {
         $scope.map = map;
     });
 
+})
+
+.controller('EventBookingCtrl', function($scope){
+    $scope.SubmitServiceRequest = function(){
+        console.log($scope);
+    };
 })
 .controller('ListCtrl', function($scope, $ionicListDelegate, Items) {
 
