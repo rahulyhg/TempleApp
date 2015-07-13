@@ -71,6 +71,28 @@ angular.module('starter.controllers', [])
     };
 
 })
+
+.controller('FaceCtrl', function($scope, $stateParams, MyFb){
+    var posts = [];
+   MyFb.getAccessToken().then(function(result){
+            var url = 'https://graph.facebook.com/244766008966857/posts?'+result.data
+            MyFb.getFeed(url).then(function(r){
+            console.log(r.data.data.length);
+            for(var i = 0; i<r.data.data.length ; i++)
+                {
+                 //console.log(r.data.data[i].message);
+                 posts.push(r.data.data[i].message);
+                }
+                $scope.feeds = posts;
+            });
+
+
+
+   });
+
+   console.log(posts);
+})
+
 .controller('AlbumCtrl', function($scope,$ionicLoading,$stateParams,Flickr) {
 	$ionicLoading.show();
 
@@ -108,7 +130,7 @@ angular.module('starter.controllers', [])
 
 $scope.insert = function(id, Name, Lang, picurl) {
   console.log("reading current directory in Insert");
-   console.log(db);
+  console.log(db);
         var query = "INSERT INTO tblPriests (id, Name, Lang, picurl) VALUES (?,?,?,?)";
         $cordovaSQLite.execute(db, query, [id, Name, Lang, picurl]).then(function(res) {
             console.log("INSERT ID -> " + res.insertId);
@@ -134,8 +156,6 @@ $scope.insert = function(id, Name, Lang, picurl) {
             $scope.events = [];
       $scope.selectAll = function() {
               console.log("reading current directory in selectAll");
-             // db = $cordovaSQLite.openDB("htci.db",2);
-             // console.log(db);
 
               var query = "SELECT id, Name, Lang, picurl FROM tblPriests";
             console.log(query);
@@ -191,10 +211,60 @@ $scope.insert = function(id, Name, Lang, picurl) {
 
 })
 
-.controller('EventBookingCtrl', function($scope){
-    $scope.SubmitServiceRequest = function(){
-        console.log($scope);
-    };
+.controller('EventBookingCtrl', function($scope, Poojas, $http, $state){
+    $scope.allPoojas = Poojas.all();
+    $scope.allPriests = Poojas.allPriests();
+    $scope.allTimes = Poojas.allSlot();
+    $scope.SubmitRequestForm = function(fullname, emailaddress, pooja, priest, date, slot, note){
+
+       var mailJSON ={
+       		"key": "ZvCHjI8MtG8KW0Wz5b7PUA",
+       		"message": {
+       			"html": "<p>Pooja chair, I, "+fullname+", Interested to perform "+pooja +" POOJA on "+ date +"  Please schedule and update me.</p><p>Thanks, <br/>"+fullname+"</p>",
+       			"text": "Example text content",
+       			"subject": "Request for Service-via APP",
+       			"from_email": emailaddress,
+       			"from_name": fullname,
+       			"to": [
+       				{
+       					"email": "learn@learnseleniumtesting.com",
+       					"name": "Aditya Shahi",
+       					"type": "to"
+       				}
+
+
+       			],
+       			"important": true,
+       			"track_opens": null,
+       			"track_clicks": null,
+       			"auto_text": null,
+       			"auto_html": null,
+       			"inline_css": null,
+       			"url_strip_qs": null,
+       			"preserve_recipients": null,
+       			"view_content_link": null,
+       			"tracking_domain": null,
+       			"signing_domain": null,
+       			"return_path_domain": null
+       		},
+       		"async": false,
+       		"ip_pool": "Main Pool"
+       	};
+       //reference to the Mandrill REST api
+	    var apiURL = "https://mandrillapp.com/api/1.0/messages/send.json";
+
+        		$http.post(apiURL, mailJSON).
+        			success(function(data, status, headers, config) {
+        			    $state.go('app.mailack',{"id": 1234})
+        				console.log('successful email send.');
+        				console.log('status: ' + status);
+        			}).error(function(data, status, headers, config) {
+        				alert("Please check form");
+        				console.log('error sending email.');
+        				console.log('status: ' + status);
+        			});
+        };
+
 })
 .controller('ListCtrl', function($scope, $ionicListDelegate, Items) {
 

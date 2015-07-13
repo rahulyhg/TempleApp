@@ -48,7 +48,8 @@ angular.module('starter', ['ionic', 'starter.controllers','flickrApp.services', 
     url: "/facebook",
     views: {
       'menuContent': {
-        templateUrl: "templates/facebook.html"
+        templateUrl: "templates/facebook.html",
+        controller: "FaceCtrl"
       }
     }
   })
@@ -158,6 +159,22 @@ angular.module('starter', ['ionic', 'starter.controllers','flickrApp.services', 
         }
       }
     })
+     .state('app.mailack', {
+          url: "/mailack",
+          views: {
+            'menuContent': {
+              templateUrl: "templates/mailack.html"
+            }
+          }
+        })
+  .state('app.panchang', {
+           url: "/panchang",
+           views: {
+             'menuContent': {
+               templateUrl: "templates/panchang.html"
+             }
+           }
+         })
 
   .state('app.single', {
     url: "/playlists/:playlistId",

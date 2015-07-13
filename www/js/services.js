@@ -288,4 +288,113 @@ return {
         return members[id]
       }
   }
+})
+
+.factory('MyFb', function($http,$q){
+    var result = {};
+
+    var profile_id = '244766008966857';
+    var client_id = '298765316912627';
+    var client_secret = 'fcced3361a518f106eab22312a55b995';
+
+
+    return {
+        getAccessToken: function() {
+          var url = 'https://graph.facebook.com/oauth/access_token?grant_type=client_credentials&client_id='+ client_id +'&client_secret='+ client_secret;
+          return $http.get(url);
+        },
+
+        getFeed: function(url) {
+            // console.log(access_token);
+            // var url = 'https://graph.facebook.com/Boo/posts?access_token='+access_token;
+                           console.log(url);
+                            return $http.get(url);
+          }
+      }
+
+
+
+
+
+})
+
+.factory('Poojas', function(){
+var poojaType = [
+                    {
+                       id: 0,
+                       name: "Choose Pooja",
+                       fee: 0
+                     },
+                    {
+                        id: 1,
+                        name: "Ayappa Pooja",
+                        fee: 51
+
+                    },
+                    {
+                         id: 2,
+                         name: "Durga Archna",
+                         fee: 101
+
+                    }
+                ];
+     var priests = [
+                    {
+                     id: 0,
+                     name:"Any one"
+                    },
+                    {
+                     id: 1,
+                     name:"Sri Badrinath Shastri"
+                    },
+                    {
+                     id: 2,
+                     name:"Sri Rama Bhattar",
+                    },
+                    {
+                     id: 3,
+                     name:"Sri Kirthivasan",
+                    }
+                  ];
+
+     var times =[
+                     {
+                        id: 0,
+                        time: "Based On Availability"
+                     },
+                     {
+                        id: 1,
+                        time: "Morning"
+                     },
+                     {
+                        id: 2,
+                        time: "Noon"
+                     },
+                     {
+                        id: 3,
+                        time: "Evening"
+                     }
+                   ];
+
+
+     return {
+             all: function() {
+                   return poojaType;
+             },
+             get: function(id) {
+                  return poojaType[id];
+             },
+             allPriests: function(){
+                return priests;
+             },
+             getPriest: function(id){
+             return priests[id];
+             },
+             allSlot: function(){
+                return times;
+             },
+             getSlot: function(id){
+             return times[id];
+             },
+     }
 });

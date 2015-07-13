@@ -1,8 +1,11 @@
-<ion-view view-title="Facebook Feed">
-<ion-content>
-    <h1>feed</h1>
-    <h3>PhoneGap-GoogleMaps-Plugin</h3>
-    <div style="width:100%;height:400px" id="map_canvas"></div>
-    <button id="button">Full Screen</button>
-  </ion-content>
+<ion-view view-title="HTCI Facebook Feed">
+    <ion-content class="has-header">
+        <ion-list>
+            <ion-item class="item-icon-left item-text-wrap" collection-repeat="feed in feeds" ng-click="openAlbum(album.id)">
+                <i class="icon ion-social-facebook positive"></i>
+                {{feed}}
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
 </ion-view>
