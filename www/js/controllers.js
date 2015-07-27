@@ -90,7 +90,8 @@ angular.module('starter.controllers', [])
 
    });
 
-   console.log(posts);
+   $scope.doRefresh = function() {
+    };
 })
 
 .controller('AlbumCtrl', function($scope,$ionicLoading,$stateParams,Flickr) {

@@ -1,5 +1,9 @@
 <ion-view view-title="HTCI Facebook Feed">
     <ion-content class="has-header">
+        <ion-refresher
+                pulling-text="Pull to refresh..."
+                on-refresh="doRefresh()">
+        </ion-refresher>
         <ion-list>
             <ion-item class="item-icon-left item-text-wrap" collection-repeat="feed in feeds" ng-click="openAlbum(album.id)">
                 <i class="icon ion-social-facebook positive"></i>
